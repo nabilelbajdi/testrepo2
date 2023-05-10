@@ -1,21 +1,22 @@
-name: Mirror and run GitLab CI
+stages:
+  - build
+  - lint
+  - deploy
 
-on: [push]
+build-job:
+  stage: build
+  script:
+    - echo "Hello, $GITLAB_USER_LOGIN!"
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v1
-    - name: Mirror + trigger CI
-      uses: SvanBoxel/gitlab-mirror-and-ci-action@master
-      with:
-        args: "https://gitlab.com/nabilelbajdi/mirror"
-      env:
-        FOLLOW_TAGS: "false"
-        FORCE_PUSH: "false"
-        GITLAB_HOSTNAME: "gitlab.com"
-        GITLAB_USERNAME: "svboxel"
-        GITLAB_PASSWORD: ${{ secrets.GITLAB_PASSWORD }}
-        GITLAB_PROJECT_ID: "45902943"
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+lint-job:
+  stage: lint
+  image: node:latest
+  script:
+    - npm install --save-dev eslint
+    - npx eslint .
+
+deploy-prod:
+  stage: deploy
+  script:
+    - echo "This job deploys something from the $CI_COMMIT_BRANCH branch."
+  environment: production
