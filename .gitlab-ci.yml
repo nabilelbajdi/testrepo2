@@ -10,7 +10,7 @@ build-job:
     - docker:dind
   script:
     - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-    - docker build -t $DOCKER_USERNAME/<your-image-name>:latest .
+    - docker build -t $DOCKER_USERNAME/my-image:latest .
     - docker push $DOCKER_USERNAME/my-image:latest
 
 
