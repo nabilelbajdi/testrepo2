@@ -9,9 +9,9 @@ build-job:
   services:
     - docker:dind
   script:
-    - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-    - docker build -t $DOCKER_USERNAME/my-image:latest .
-    - docker push $DOCKER_USERNAME/my-image:latest
+    - docker login registry.gitlab.com
+    - docker build -t registry.gitlab.com/nabilelbajdi/github-mirror .
+    - docker push registry.gitlab.com/nabilelbajdi/github-mirror
 
 
 lint-job:
